@@ -77,8 +77,7 @@ it will generates folders:
 
 
 # JsonML (Json Markup Language)
-I do not like this. It's idiot format. but the Markdown-js uses this.
-
+this is a inter-programming format: for procesing text fragment.
 
     <div class='main'>
       hi
