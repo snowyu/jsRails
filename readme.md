@@ -1,13 +1,14 @@
 Project/Application/Web: mkapp
 Architect: Riceball LEE
 Version: 0.0.1
-Requirements: javascript, handlebars, Markdown
+Language: Javascript, CSS
+Background: node.js, handlebars, Markdown
 
 Description: Toolkit for Rapid Application Prototype Design and Development.
 The requirement file will include the Features, Views and Models.
 
 
-<:=Command:new:=>
+#<:=Command:new:=>
   Arguments: 
     * Directory name(optional). 
 
@@ -29,7 +30,7 @@ The requirement file will include the Features, Views and Models.
       Then the start-up readme.md requirement file will be created in the current directory. 
 
 
-<:=Command:update:=>
+#<:=Command:update:=>
 
   Arguments: 
     * Directory name or file name.(optional).
@@ -75,12 +76,35 @@ it will generates folders:
       pages/js/lib/  -- general customizations
 
 
+# JsonML (Json Markup Language)
+I do not like this. It's idiot format. but the Markdown-js uses this.
 
-<:=Page:Markdown Extension Format=:>
+
+    <div class='main'>
+      hi
+      <div>world</div>
+      <div>world2</div>
+      guest.
+    </div>
+
+
+    ['div',
+     {'class':'main'},
+     [
+       'hi',
+       ['div','world'],
+       ['div', world2],
+       'guest.'
+     ]
+    ]
+
+
+
+# Page:Markdown Extension Format
 
 Usage: Manual
 
-# Document Meta Information
+## Document Meta Information
 
 Feature: Markdown/Document Meta
 
@@ -108,7 +132,7 @@ the following meta info will be supported:
 * AUthor
 * Version/Revision
 
-# Language
+## Writen Language
 
 The Default is English. 
 Other Language use the second file extesion name indication:
@@ -117,9 +141,9 @@ Other Language use the second file extesion name indication:
 
 The keywords is always English, but it can be translated dynamically when show.
 
-# Comments
+## Comments
 
-## Comment Block
+### Comment Block
 
 this must be no space before (<!-- -->)
 
@@ -127,7 +151,7 @@ this must be no space before (<!-- -->)
       this is a block Comment.
     -->
 
-# the CSS Definitions
+## the CSS Definitions
 
     <:-CSS:Filename.scss:->
         .ClassName
@@ -135,26 +159,55 @@ this must be no space before (<!-- -->)
         #ID
           Description: explain this item.
 
-# the Feature Definition
+## the Feature Definition
 
 It will automatically create a feature file(features/Feature_Name.feature) in features dir if no FeatureFilename.
-自动文件名会将空格替换为"\_"
+the space char will be replace with \_"
 
-# the Description Definitions
+## the Description Definitions
 
     Description: explain the block
     RegExpress: ^\s*Description:()
 
+## the Rails Block Definition
 
+Use the Atx-style headers and with multi Block type supports.
+Directly replace the atx-style header processing
 
-# the Rails Block Definition
+    # BlockType:[Div.]CSS_ClassName[ CSS_ClassName...][(attribute_name=value)]
+    # Feature:
+    # Page:
+    # Model:
+    # Block:
 
-使用"<::::>"将块的信息扩住
+JsonML:
 
-    <::[BlockType:][DIV.]CSS_Class_Name ClassName2[{attribute_name=value, ...}]::>
+    [
+      'Block',
+      {},
+      []  //string or array.
+    ]    
+
+treat the indentation level as the block level and the rails block definition.
+
+The Rails Block Definition Must be exists on the header of this block.
+here is the RegExp :
+
+    /^([ \t]*)(#{1,6})\s*((\w+):(?:(\w+)\.)?((?:\s*[#.]?\w+)+)(?:\((.+)\))?)\s*#*\s*(?:\n|$)/
+    m[1] = the indentation level
+    m[2] = The title level
+    m[3] = the total title
+    m[4] = BlockType
+    m[5] = TagName(Optional)
+    m[6] = ClassNames
+    m[7] = AttributeNames
+
+specially for the html block description, ok the html block called block, not specially now:
+
+    <::[DIV.]CSS_Class_Name ClassName2[{attribute_name=value, ...}]::>
     [Description: explain the block]
 
-至少两个":"冒号。
+two ":" chars at least。
 
 the following line is the Description to explain the block, it's optional.
 
@@ -167,9 +220,9 @@ the following line is the Description to explain the block, it's optional.
 
 该形式(Format)必须用在多行块中
 
-可以有多个类名，用“ ”空格分隔
+multi class names are seperated via the space(" ”) char.
 
-## 例子
+### Sample
 
 <pre>
 <::ClassName1{ID="my_id", Name="my_name"}::>
@@ -183,11 +236,11 @@ the following line is the Description to explain the block, it's optional.
       Pig
       New anoymous Div  :(-)
 
-      OK Adffg          :(Right)
+      OK Adffg          :(Right).span
 </pre>
 
 
-对应的Div为：
+the output：
 
 <pre>
 <!-- this is a explain about this block. -->
@@ -198,12 +251,12 @@ the following line is the Description to explain the block, it's optional.
       Hi Another Jiki Pig
       <div>New anoymous Div</div>
     </div>
-    <div class="Right">OK Adffg</div>
+    <span class="Right">OK Adffg</span>
   </div>
 </div>
 </pre>
 
-## the View(Page) Block Definition
+### the View(Page) Block Definition
 
     <:-Page:Name:->
     URL: XX
@@ -215,11 +268,11 @@ the following line is the Description to explain the block, it's optional.
 
 the Action(URL), File, CSS and Scripts all are optional.
 
-# Reference Block
+## Reference Block
 
     %{Block_id}
 
-## Examples
+### Examples
 
 
 <pre>
@@ -234,7 +287,7 @@ the Action(URL), File, CSS and Scripts all are optional.
 
 </pre>
 
-# Include Other File
+## Include Other File
 
     %{file:Filename[.md]}
 
