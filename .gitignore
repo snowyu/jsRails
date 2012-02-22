@@ -1,0 +1,15 @@
+/.project
+/.loadpath
+/files/*
+*.pyo
+/log/*.log*
+/tmp/*
+*.rbc
+*.bak
+/.bundle
+/Gemfile.lock
+/Gemfile.local
+/.rvmrc*
+.DS_Store
+.svn
+.sass-cache
